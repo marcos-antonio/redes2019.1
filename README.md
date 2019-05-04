@@ -4,7 +4,7 @@
 Necessito de um serviço de comunicação via texto chamado de BAT-Papo (Caso tenham nomes melhores, fiquem a vontade). 
 
 ### Cliente
-Um cliente deve suportar as seguintes as seguintes funcionalidades:
+Um cliente deve suportar as seguintes funcionalidades:
 
 * Um cliente, ao ser criado, deve solicitar ao usuário qual será o seu ID. O cliente deve registrar o ID do usuário no servidor. 
 * Após receber a confirmação de registro do servidor, o cliente deve estar habilitado para, ao mesmo tempo, poder enviar mensagens para outros usuários baseados em seus IDs, ou receber mensagens  de outros usuários.
