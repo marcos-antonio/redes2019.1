@@ -32,27 +32,27 @@ def registerUsername():
         username = raw_input('Digite seu nome de usuario:\n')
         encodedUsername = username.encode(ENCODE)
 
-        sock.sendto(username, serverDest)
+        sock.sendto('1:' + str([username]), serverDest)
 
         data, address = sock.recvfrom(MAX_BYTES)
-        response = data.decode(ENCODE)
+        response = data.decode(ENCODE).split(':')
 
-        if response != 'Usuario ja cadastrado':
-            isAccepted = True
+        isAccepted = response[0] == '2'
+        print(response[1])
 
     return username
 
 def messageSender():
     message = raw_input('Digite a mensagem que voce quer enviar:\n')
-    receiver = raw_input('Digite o nome do usuario receptor:\n')
-    encodedData = (message + ':' + receiver).encode(ENCODE)
+    destiny = raw_input('Digite o nome do usuario receptor:\n')
+    encodedData = ('3:' + str([message, destiny])).encode(ENCODE)
 
     sock.sendto(encodedData, serverDest)
 
     data, address = sock.recvfrom(MAX_BYTES)
-    response = data.decode(ENCODE)
+    response = data.decode(ENCODE).split(':')
 
-    print(response)
+    print(response[1])
 
 def resolveServerMessages():
     data, address = sock.recvfrom(MAX_BYTES)
@@ -62,12 +62,12 @@ def resolveServerMessages():
 
 def printUserlist():
 
-    sock.sendto('1'.encode(ENCODE), serverDest)
+    sock.sendto('2:[]'.encode(ENCODE), serverDest)
     data, address = sock.recvfrom(MAX_BYTES)
     response = str(data.decode(ENCODE))
 
-    userlist = response.split(':')
+    userlist = eval(response.split(':')[1])
     for u in userlist:
-        print(u)
+        print(u.decode(ENCODE))
 
 client()
