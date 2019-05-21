@@ -15,11 +15,11 @@ def client():
         print('Comandos possiveis\n')
         print('1 - Enviar mensagem\n')
         print('2 - Listar usuarios\n')
-        comando = int(raw_input('Digite o numero do comando desejado: \n'))
+        comando = raw_input('Digite o numero do comando desejado: \n')
 
-        if comando == 1:
+        if comando == '1':
             messageSender()
-        elif comando == 2:
+        elif comando == '2':
             printUserlist()
         else:
             print('Comando invalido')
