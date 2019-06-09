@@ -14,30 +14,34 @@ def server():
     while True:
         data, address = sock.recvfrom(MAX_BYTES)
         data = data.decode(ENCODE).split(':')
-        text = ''
-        code = 5
+        text = 'Erro do servidor'
+        respondeCode = 5
+        responseAction = 0
         action = data[0]
         data = eval(data[1])
+        print(userlist)
 
 
         if (action == '1'):
             if registerUser(data[0], address) == True:
                 text = 'Usuario cadastrado com sucesso'
-                code = 2
+                respondeCode = 2
             else:
-                code = 4
+                respondeCode = 4
                 text = 'Usuario ja cadastrado'
         elif (action == '2'):
-            code = 2
+            respondeCode = 2
+            responseAction = 2
             text = str(list(userlist.keys()))
         elif (action == '3'):
+            responseAction = 1
             if sendMessage(data[0], data[1]) == True:
-                code = 2
+                respondeCode = 2
                 text = 'Mensagem enviada'
             else:
-                code = 4
+                respondeCode = 4
                 text = 'Usuario nao encontrado'
-        text = (str(code) + ':' + text).encode(ENCODE)
+        text = (str(respondeCode) + ':' + text + ':' + str(responseAction)).encode(ENCODE)
         sock.sendto(text, address)
 
 
@@ -53,7 +57,7 @@ def sendMessage(message, destiny):
     if destinyAddress == None:
         return False
     else:
-        message = ('2:' + message).encode(ENCODE)
+        message = ('2:' + message + ':3').encode(ENCODE)
         sock.sendto(message, destinyAddress)
         return True
 
